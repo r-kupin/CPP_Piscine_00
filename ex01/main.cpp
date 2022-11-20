@@ -1,0 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/08 18:47:17 by rokupin           #+#    #+#             */
+/*   Updated: 2022/11/11 18:19:21 by rokupin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+//		Google C++ Style Guide
+//				VARIABLES
+//	- Initialize variables in the declaration.
+
+//		Description
+//	1.Creating an object
+//		There are 2 ways to create an object in cpp (like in C) - on a stack or heap;
+//		Creating object on the stack - declaring a variable with a type of an object
+//		Creating object in the heap - allocating memory with a *new* operator and
+//			creating a (smart)pointer to this memory area.
+//		- Object on the stack
+//			Book book("somebook");
+//		- Pointer to object - C-style *BAD*
+//			Book* book = new Book("somebook");
+//		- ()sDeclare a smart pointer on stack and pass it the raw pointer - C++-style *GOOD*
+//			std::unique_ptr<Book> book(new Book("somebook"));
+//	2.Calling method of created object.
+//		Just like structures in C - fields and method are accessible throw dot notation
+//		on the objects itself
+//			book.start();
+//		or throw the arrow notation when dealing with the pointers to objects
+//			book->start();
+//
+
+#include "Book.h"
+
+int main(int argc, char **argv)
+{
+	Book book("somebook");
+	book.start();
+	return 0;
+};
