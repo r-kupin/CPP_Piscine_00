@@ -10,14 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//		Google C++ Style Guide
-//				VARIABLES
-//	- Place a function's variables in the narrowest scope possible,
-//	- Variables needed for if, while and for statements should normally be declared within those statements,
-//			so that such variables are confined to those scopes. E.g.:
-//
-//					while (const char* p = strchr(str, '/')) str = p + 1;
-
 #ifndef EX01_CONTACT_H_
 #define EX01_CONTACT_H_
 
@@ -25,21 +17,21 @@
 
 class Contact {
   private:
-	std::string  first_name,
-            last_name,
-            nick_name,
-            phone_number,
-            darkest_secret;
+	std::string  first_name_,
+            last_name_,
+            nick_name_,
+            phone_number_,
+            darkest_secret_;
   public:
 	Contact();
 	~Contact();
-	Contact(const Contact&) = delete;
-	void set_contact(
-			std::string first_name_v,
-			std::string last_name_v,
-			std::string nick_name_v,
-			std::string phone_number_v,
-			std::string darkest_secret_v);
+	void SetFirstName(std::string& first_name);
+	void SetLastName(std::string& last_name);
+	void SetNickName(std::string& nick_name);
+	void SetPhoneNumber(std::string& phone_number);
+	void SetDarkestSecret(std::string& darkest_secret);
+	void Display(int index);
+	void ShowDetails();
 };
 
-#endif // EX01_CONTACT_H_
+#endif // EX01_CONTACT_H

@@ -10,39 +10,52 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//		Google C++ Style Guide
-//				CLASSES
-//	- Avoid virtual method calls in constructors, and avoid initialization that can fail if you can't signal an error.
-//	- A class's public API must make clear whether the class is copyable, move-only, or neither copyable nor movable.
-//		Support copying and/or moving if these operations are clear and meaningful for your type.
-//	- Every class's public interface must make clear which copy and move operations the class supports.
-//		This should usually take the form of explicitly declaring and/or deleting the appropriate operations
-//		in the public section of the declaration.
 #include "Contact.h"
 
-#include <utility>
+#include <iostream>
+#include <iomanip>
+
+#include "UI.h"
 
 Contact::Contact() = default;
 
 Contact::~Contact() = default;
 
-void Contact::set_contact(std::string first_name_v,
-						  std::string last_name_v,
-						  std::string nick_name_v,
-						  std::string phone_number_v,
-						  std::string darkest_secret_v) {
-	//	A copyable type is one that can be initialized or assigned from any other object of the same type
-	//	(so is also movable by definition), with the stipulation that the value of the source does not change.
-	//
-	//	std::unique_ptr<int> is an example of a movable but not copyable type
-	//	(since the value of the source std::unique_ptr<int> must be modified during assignment to the destination).
-	//
-	//	int and std::string are examples of movable types that are also copyable.
-	//	(For int, the move and copy operations are the same; for std::string,
-	//	there exists a move operation that is less expensive than a copy.)
-	this->first_name = std::move(first_name_v);
-	this->last_name = std::move(last_name_v);
-	this->nick_name = std::move(nick_name_v);
-	this->phone_number = std::move(phone_number_v);
-	this->darkest_secret = std::move(darkest_secret_v);
-};
+
+void Contact::SetFirstName(std::string &first_name) {
+	first_name_ = first_name;
+}
+
+void Contact::SetLastName(std::string &last_name) {
+	last_name_ = last_name;
+}
+
+void Contact::SetNickName(std::string &nick_name) {
+	nick_name_ = nick_name;
+}
+
+void Contact::SetPhoneNumber(std::string &phone_number) {
+	phone_number_ = phone_number;
+}
+
+void Contact::SetDarkestSecret(std::string &darkest_secret) {
+	darkest_secret_ = darkest_secret;
+}
+
+void Contact::Display(int index) {
+
+	UI::ShowFormattedTableCell(index);
+	UI::ShowFormattedTableCell(first_name_);
+	UI::ShowFormattedTableCell(last_name_);
+	UI::ShowFormattedTableCell(nick_name_);
+	UI::ShowFormattedTableCell(phone_number_);
+	std::cout << std::endl;
+}
+
+void Contact::ShowDetails() {
+	UI::PrintAndWaitForEnter("First Name: " + first_name_);
+	UI::PrintAndWaitForEnter("Last Name: " + last_name_);
+	UI::PrintAndWaitForEnter("Nick Name: " + nick_name_);
+	UI::PrintAndWaitForEnter("Phone Number: " + phone_number_);
+	UI::PrintAndWaitForEnter("Darkest secret: " + darkest_secret_);
+}

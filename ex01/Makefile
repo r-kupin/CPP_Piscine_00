@@ -12,22 +12,22 @@
 #           |__/      |__/                                
 #
 
-NAME = PhoneFoock
+NAME = PhoneBook
 
-SRCS = main.cpp
+SRCS = Contact.cpp Book.cpp main.cpp UI.cpp
 
-OBJS = $(patsubst %.cpp, %.o, $(SRCS))
+OBJS = $(SRCS:.cpp=.o)
 
-CC = clang++
-FLAGS = -Wall -Wextra -Werror  -g -fsanitize=address
+CXX = clang++
+CXXFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
-$(OBJS): $(SRCS)
-	$(CC) $(FLAGS) -c -o $@ $<
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm $(OBJS)
