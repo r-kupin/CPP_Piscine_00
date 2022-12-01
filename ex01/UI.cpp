@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <climits>
 
 void UI::ShowGreeting() {
 	std::cout <<  "Right from the" << std::endl;
@@ -35,8 +36,15 @@ void UI::PrintAndSet(const std::string &print, std::string &get) {
 
 void UI::PrintAndSet(const std::string &print, int &get) {
 	std::cout << print;
-	std::cin >> get;
-	std::cin.ignore();
+	get = std::cin.get();
+	if (get == '\n') {
+		get = -1;
+		return;
+	} else {
+		get -= '0';
+	}
+	std::cin.clear();
+	std::cin.ignore(INT_MAX, '\n');
 }
 
 void UI::ShowExitMessage() {

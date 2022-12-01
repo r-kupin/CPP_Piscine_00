@@ -77,8 +77,6 @@
  */
 #include "Book.h"
 
-#include "Contact.h"
-
 Book::Book()
 	: size_(0), oldest_modified_(0) {}
 
@@ -87,9 +85,9 @@ Book::~Book() = default;
 void Book::AddModify() {
 	std::string input;
 
-	if (oldest_modified_ >= (int)contacts_.size())
+	if (oldest_modified_ >= static_cast<int>(contacts_.size()))
 		oldest_modified_ = 0;
-	if (size_ < (int)contacts_.size())
+	if (size_ < static_cast<int>(contacts_.size()))
 		size_++;
 	UI::PrintAndSet("Enter first name:", input);
 	contacts_.at(oldest_modified_).SetFirstName(input);
