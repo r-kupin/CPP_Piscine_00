@@ -84,20 +84,31 @@ Book::~Book() = default;
 
 void Book::AddModify() {
 	std::string input;
+	bool err = false;
 
 	if (oldest_modified_ >= static_cast<int>(contacts_.size()))
 		oldest_modified_ = 0;
 	if (size_ < static_cast<int>(contacts_.size()))
 		size_++;
-	UI::PrintAndSet("Enter first name:", input);
+	UI::PrintAndSet("Enter first name:", input, err);
+	if (err)
+		return;
 	contacts_.at(oldest_modified_).SetFirstName(input);
-	UI::PrintAndSet("Enter last name:", input);
+	UI::PrintAndSet("Enter last name:", input, err);
+	if (err)
+		return;
 	contacts_.at(oldest_modified_).SetLastName(input);
-	UI::PrintAndSet("Enter nick name:", input);
+	UI::PrintAndSet("Enter nick name:", input, err);
+	if (err)
+		return;
 	contacts_.at(oldest_modified_).SetNickName(input);
-	UI::PrintAndSet("Enter phone number:", input);
+	UI::PrintAndSet("Enter phone number:", input, err);
+	if (err)
+		return;
 	contacts_.at(oldest_modified_).SetPhoneNumber(input);
-	UI::PrintAndSet("Enter darkest secret:", input);
+	UI::PrintAndSet("Enter darkest secret:", input, err);
+	if (err)
+		return;
 	contacts_.at(oldest_modified_).SetDarkestSecret(input);
 	++oldest_modified_;
 }
@@ -114,24 +125,28 @@ void Book::Search() {
 		for (int i = 0; i < size_; ++i) {
 			contacts_.at(i).Display(i + 1);
 		}
-		UI::PrintAndSet(kPromptMessage, ID_to_show);
+		UI::PrintAndSetInt(kPromptMessage, ID_to_show);
 		while (ID_to_show <= 0 || ID_to_show > size_)
-			UI::PrintAndSet(kErrorMessage, ID_to_show);
+			UI::PrintAndSetInt(kErrorMessage, ID_to_show);
 		contacts_.at(ID_to_show - 1).ShowDetails();
 	}
 }
 
 void Book::Start() {
 	const std::string kPromptMessage = "Enter your command:";
+	bool err = false;
 
 	UI::ShowGreeting();
 	for (std::string usr_input;
 		 usr_input != "EXIT";
-		 UI::PrintAndSet(kPromptMessage, usr_input)) {
-		if (usr_input == "ADD")
+		 UI::PrintAndSet(kPromptMessage, usr_input, err)) {
+		if (err) {
+			return;
+		} else if (usr_input == "ADD") {
 			AddModify();
-		else if (usr_input == "SEARCH")
+		} else if (usr_input == "SEARCH") {
 			Search();
+		}
 	}
 	UI::ShowExitMessage();
 }

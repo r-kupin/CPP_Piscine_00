@@ -29,12 +29,17 @@ void UI::ShowGreeting() {
 	std::cout << "Available commands: ADD, SEARCH and EXIT" << std::endl;
 }
 
-void UI::PrintAndSet(const std::string &print, std::string &get) {
+void UI::PrintAndSet(const std::string &print, std::string &get, bool &err) {
 	std::cout << print;
 	std::getline(std::cin, get);
+	if (std::cin.rdstate() != 0) {
+		std::cin.clear();
+		std::cout << "Oops, something went wrong.." << std::endl;
+		err = true;
+	}
 }
 
-void UI::PrintAndSet(const std::string &print, int &get) {
+void UI::PrintAndSetInt(const std::string &print, int &get) {
 	std::cout << print;
 	get = std::cin.get();
 	if (get == '\n') {

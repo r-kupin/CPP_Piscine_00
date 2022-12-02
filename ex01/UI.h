@@ -23,8 +23,8 @@ class UI {
 	public:
 		UI() = delete;
 		~UI() = delete;
-		static void PrintAndSet(const std::string &print, std::string &get);
-		static void PrintAndSet(const std::string &print, int &get);
+		static void PrintAndSet(const std::string &print, std::string &get, bool &err);
+		static void PrintAndSetInt(const std::string &print, int &get);
 		static void PrintAndWaitForEnter(const std::string &print);
 		static void	ShowGreeting();
 		static void	ShowEmptyTableMessage();
