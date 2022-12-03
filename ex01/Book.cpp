@@ -74,6 +74,7 @@
 				arguments
 			4. A few efficiency cases.
 				Here the program is correct w/o member initialization list)
+	2. Destructor is set to default explicitly
  */
 #include "Book.h"
 
@@ -82,6 +83,35 @@ Book::Book()
 
 Book::~Book() = default;
 
+//	Main method. Shows the prompt and handles the received commands.
+//	bool err - error flag, as far as we will uncower exceptions a bit later..
+//
+void Book::Start() {
+	const std::string kPromptMessage = "Enter your command:";
+	bool err = false;
+
+	UI::ShowGreeting();
+	for (std::string usr_input;
+		 usr_input != "EXIT";
+		 UI::PrintAndSetLine(kPromptMessage, usr_input, err)) {
+		if (err) {
+			return;
+		} else if (usr_input == "ADD") {
+			AddModify();
+		} else if (usr_input == "SEARCH") {
+			Search();
+		}
+	}
+	UI::ShowExitMessage();
+}
+
+//	Performs addition / altering of a user field by field
+//	Static_cast conversion between types using a combination of implicit and
+//		user-defined conversions. Basically redundant, but -WWW compilation flags
+//		enforces an explicit cast, and write static_cast<int>(size_t) is one of
+//		the C++-ish ways to say (int)size_t
+//
+//
 void Book::AddModify() {
 	std::string input;
 	bool err = false;
@@ -90,29 +120,32 @@ void Book::AddModify() {
 		oldest_modified_ = 0;
 	if (size_ < static_cast<int>(contacts_.size()))
 		size_++;
-	UI::PrintAndSet("Enter first name:", input, err);
+	UI::PrintAndSetLine("Enter first name:", input, err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetFirstName(input);
-	UI::PrintAndSet("Enter last name:", input, err);
+	UI::PrintAndSetLine("Enter last name:", input, err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetLastName(input);
-	UI::PrintAndSet("Enter nick name:", input, err);
+	UI::PrintAndSetLine("Enter nick name:", input, err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetNickName(input);
-	UI::PrintAndSet("Enter phone number:", input, err);
+	UI::PrintAndSetLine("Enter phone number:", input, err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetPhoneNumber(input);
-	UI::PrintAndSet("Enter darkest secret:", input, err);
+	UI::PrintAndSetLine("Enter darkest secret:", input, err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetDarkestSecret(input);
 	++oldest_modified_;
 }
 
+//	shows all existing users in a table, then asks for an ID to show
+//		detailed user info
+//
 void Book::Search() {
 	const std::string kPromptMessage = "Enter contact ID to see the details:";
 	const std::string kErrorMessage = "Please enter valid ID (see the table):";
@@ -130,23 +163,4 @@ void Book::Search() {
 			UI::PrintAndSetInt(kErrorMessage, ID_to_show);
 		contacts_.at(ID_to_show - 1).ShowDetails();
 	}
-}
-
-void Book::Start() {
-	const std::string kPromptMessage = "Enter your command:";
-	bool err = false;
-
-	UI::ShowGreeting();
-	for (std::string usr_input;
-		 usr_input != "EXIT";
-		 UI::PrintAndSet(kPromptMessage, usr_input, err)) {
-		if (err) {
-			return;
-		} else if (usr_input == "ADD") {
-			AddModify();
-		} else if (usr_input == "SEARCH") {
-			Search();
-		}
-	}
-	UI::ShowExitMessage();
 }

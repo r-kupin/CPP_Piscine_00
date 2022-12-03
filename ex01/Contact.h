@@ -25,11 +25,11 @@ class Contact {
   public:
 	Contact();
 	~Contact();
-	void SetFirstName(std::string& first_name);
-	void SetLastName(std::string& last_name);
-	void SetNickName(std::string& nick_name);
-	void SetPhoneNumber(std::string& phone_number);
-	void SetDarkestSecret(std::string& darkest_secret);
+	void SetFirstName(const std::string &first_name);
+	void SetLastName(const std::string &last_name);
+	void SetNickName(const std::string &nick_name);
+	void SetPhoneNumber(const std::string &phone_number);
+	void SetDarkestSecret(const std::string &darkest_secret);
 	void Display(int index);
 	void ShowDetails();
 };

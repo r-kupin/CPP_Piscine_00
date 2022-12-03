@@ -22,26 +22,27 @@ Contact::Contact() = default;
 Contact::~Contact() = default;
 
 
-void Contact::SetFirstName(std::string &first_name) {
+void Contact::SetFirstName(const std::string &first_name) {
 	first_name_ = first_name;
 }
 
-void Contact::SetLastName(std::string &last_name) {
+void Contact::SetLastName(const std::string &last_name) {
 	last_name_ = last_name;
 }
 
-void Contact::SetNickName(std::string &nick_name) {
+void Contact::SetNickName(const std::string &nick_name) {
 	nick_name_ = nick_name;
 }
 
-void Contact::SetPhoneNumber(std::string &phone_number) {
+void Contact::SetPhoneNumber(const std::string &phone_number) {
 	phone_number_ = phone_number;
 }
 
-void Contact::SetDarkestSecret(std::string &darkest_secret) {
+void Contact::SetDarkestSecret(const std::string &darkest_secret) {
 	darkest_secret_ = darkest_secret;
 }
-
+//	shows user data in table-aligned format
+//
 void Contact::Display(int index) {
 
 	UI::ShowFormattedTableCell(index);
@@ -51,7 +52,9 @@ void Contact::Display(int index) {
 	UI::ShowFormattedTableCell(phone_number_);
 	std::cout << std::endl;
 }
-
+//	shows detailed user info line-by-line, and each time waits for ENTER to show
+//	next line
+//
 void Contact::ShowDetails() {
 	UI::PrintAndWaitForEnter("First Name: " + first_name_);
 	UI::PrintAndWaitForEnter("Last Name: " + last_name_);
