@@ -30,7 +30,8 @@
 			not the	object - therefore they do not require an object creation to
 			get called() and, obviously can refer only to static variables which
 			are "global" for all objects of a particular class
-		4. Display-method - shows all static, class-related data
+		4. Object's API, all trivial, nothing interesting
+		5.
 */
 #include <iostream>
 #include <chrono>
@@ -146,8 +147,7 @@ void Account::displayStatus() const {
 void Account::_displayTimestamp() {
 	const int kGMTYearBegin = 1900;
 
-	std::time_t time = std::chrono::system_clock::to_time_t(
-			std::chrono::system_clock::now());
+	std::time_t time = std::time(nullptr);
 
 	std::cout << "[" << std::gmtime(&time)->tm_year + kGMTYearBegin <<
 	std::setw(2) << std::setfill('0') << std::gmtime(&time)->tm_mon <<
