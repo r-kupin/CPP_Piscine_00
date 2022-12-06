@@ -13,29 +13,61 @@
 		Description
 
 	So, basically here we have $$ blocs of methods, broken down by types:
-		0. Constructors and destructor
-		1. "getters" - they show us current state of fields in "read-only" mode
-		2. "display" - shows all data about this object in a pretty format
+ 		1. Defining and initializing static member variables
+			When we declare a static member variable inside a class, we’re
+			telling the compiler about the existence of a static member variable,
+			but not actually defining it (much like a forward declaration).
+			Because static member variables are not part of the individual class
+			objects (they are treated similarly to global variables, and get
+			initialized when the program starts), you must explicitly define the
+			static member outside of the class, in the global scope.
+		2. Constructors and destructor
+			As far as some of the member variables are static, we can't handle
+			all of them using initialisation list. Statics should be handled in
+			a constructor's \ destructors {} body
+		3. Getters - they show us current state of fields in "read-only" mode
+			This particular ones are static, meaning they belong to the class,
+			not the	object - therefore they do not require an object creation to
+			get called() and, obviously can refer only to static variables which
+			are "global" for all objects of a particular class
+		4. Display-method - shows all static, class-related data
 */
+#include <iostream>
+#include <chrono>
+#include <ctime>
+#include <iomanip>
 #include "Account.class.hpp"
 
+// Defining and initializing static member variables
+int Account::_nbAccounts = 0;
+int Account::_totalAmount = 0;
+int Account::_totalNbDeposits = 0;
+int Account::_totalNbWithdrawals = 0;
 
-Account::Account(int initial_deposit) {
-
+// Constructors and destructor
+Account::Account(int initial_deposit)
+	: _accountIndex(_nbAccounts),
+				_amount(initial_deposit),
+				_nbDeposits(0),
+				_nbWithdrawals(0) {
+	++_nbAccounts;
+	_totalAmount += _amount;
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ";" <<
+		"amount:" << _amount << ";" <<
+		"created" << std::endl;
 }
 
-Account::Account(void) {
-
+Account::~Account() {
+	--_nbAccounts;
+	_totalAmount -= _amount;
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ";" <<
+			  "amount:" << _amount << ";" <<
+			  "closed" << std::endl;
 }
 
-Account::~Account(void) {
-
-}
-//		Getters
-//	This particular ones are static, meaning they belong to the class, not the
-//	object - therefore they do not require an object creation to get called()
-//	and, obviously can refer only to static variables which are "global" for all
-//	objects of a particular class
+//Getters
 int Account::getNbAccounts() {
 	return _nbAccounts;
 }
@@ -51,27 +83,77 @@ int Account::getNbDeposits() {
 int Account::getNbWithdrawals() {
 	return _totalNbWithdrawals;
 }
-// Display
-void Account::displayAccountsInfos() {
 
+// Display-method
+// Shows Account static data altogether
+void Account::displayAccountsInfos() {
+	_displayTimestamp();
+	std::cout << "accounts:" << _nbAccounts << ";" <<
+		"total:" << _totalAmount << ";" <<
+		"deposits:" << _totalNbDeposits << ";" <<
+		"withdrawals:" << _totalNbWithdrawals << std::endl;
 }
+
 // Actually object functional interface
 void Account::makeDeposit(int deposit) {
+	int p_amount = _amount;
 
+	_totalAmount += deposit;
+	_amount += deposit;
+	++_nbDeposits;
+	++_totalNbDeposits;
+
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ";" <<
+		"p_amount:" << p_amount << ";" <<
+		"deposit:" << deposit << ";" <<
+		"amount:" << _amount << ";" <<
+		"nb_deposits:" << _nbDeposits << std::endl;
 }
 
 bool Account::makeWithdrawal(int withdrawal) {
-	return false;
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ";" <<
+		"p_amount:" << _amount << ";" <<
+		"withdrawal:";
+	if (withdrawal > _amount) {
+		std::cout << "refused" << std::endl;
+		return false;
+	} else {
+		_totalAmount -= withdrawal;
+		_amount -= withdrawal;
+		++_nbWithdrawals;
+		++_totalNbWithdrawals;
+		std::cout << withdrawal << ";" <<
+			  "amount:" << _amount << ";" <<
+			  "nb_withdrawals:" << _nbWithdrawals << std::endl;
+		return true;
+	}
 }
 
-int Account::checkAmount(void) const {
-	return 0;
+int Account::checkAmount() const {
+	return _amount;
 }
 
-void Account::displayStatus(void) const {
-
+void Account::displayStatus() const {
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ";" <<
+			  "amount:" << _amount << ";" <<
+			  "deposits:" << _nbDeposits << ";" <<
+			  "withdrawals:" << _nbWithdrawals << std::endl;
 }
 
-void Account::_displayTimestamp(void) {
+void Account::_displayTimestamp() {
+	const int kGMTYearBegin = 1900;
 
+	std::time_t time = std::chrono::system_clock::to_time_t(
+			std::chrono::system_clock::now());
+
+	std::cout << "[" << std::gmtime(&time)->tm_year + kGMTYearBegin <<
+	std::setw(2) << std::setfill('0') << std::gmtime(&time)->tm_mon <<
+	std::setw(2) << std::setfill('0') << std::gmtime(&time)->tm_mday <<
+	"_" <<
+	std::setw(2) << std::setfill('0') << std::gmtime(&time)->tm_hour <<
+	std::setw(2) << std::setfill('0') << std::gmtime(&time)->tm_min <<
+	std::setw(2) << std::setfill('0') << std::gmtime(&time)->tm_sec << "] ";
 }

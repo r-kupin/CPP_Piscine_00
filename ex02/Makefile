@@ -12,9 +12,9 @@
 #           |__/      |__/                                
 #
 
-NAME = PhoneBook
+NAME = GlobalBanksters
 
-SRCS = Contact.cpp Book.cpp main.cpp UI.cpp
+SRCS = tests.cpp Account.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -24,10 +24,10 @@ CXXFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(OBJS) -o $(NAME)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) -c $< -o $@
 
 clean:
 	rm $(OBJS)

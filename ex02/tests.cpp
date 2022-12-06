@@ -11,15 +11,80 @@
 
 		The underlying madness can be broken down to some principal blocs:
 		1. Aliasing
-		2.
+		2. Creating test arrays - first interaction with Account.class
+			- $amounts, $d and $w are fof initialization purpouses only as well
+				as the _size variables
+			- $accounts vector contains instances to test. If you create a data
+				structure tat contains objects, this objects are created
+				automatically. Here's a description of the particular vector
+				constructor:
+					@brief  Builds a %vector from a range.
+					@param  __first  An input iterator.
+					@param  __last  An input iterator.
+
+					Create a %vector consisting of copies of the elements from
+					[first,last).
+
+						vector(_InputIterator __first, _InputIterator __last)
+
+					If the iterators are forward, bidirectional, or
+					random-access, then this will call the elements' copy
+					constructor N times (where N is distance(first,last)) and do
+					no memory reallocation.
+			- Making iterators for the vector.
+				An iterator is an object (like a pointer) that points to an
+				element inside the container. We can use iterators to move
+				through the contents of the container. They can be visualized as
+				something similar to a pointer pointing to some location and we
+				can access the content at that particular location using them.
+				It is a good practice to use iterators and not pointers, because
+				they are integrated in a lot of algorithms of interaction with
+				standard data structures. Vector supports Random-Access
+				Iterators, which have a maximum access level.
+				Later on, they will be used with for_each() loop
+		3. Iterating the vector with for_each() loop which applies a function
+			to every element of a sequence.
+
+			  @param  __first  An input iterator.
+			  @param  __last   An input iterator.
+			  @param  __f      A unary function object.
+
+    		for_each(_InputIterator __first, _InputIterator __last,
+    			_Function __f)
+
+			From iterator begin to end. In a code below, we just calling a
+			display() function of each account.
+			fore_ach() as the last parameter accepts a unary function object.
+
+				template <typename ArgumentType, typename ResultType>
+						struct unary_function;
+
+*deprecated* std::unary_function is a base class for creating function objects
+			with one argument - which means the object that overrides operator()
+			with 1 argument, for example:
+
+			struct less_than_7 : std::unary_function<int, bool> {
+    			bool operator()(int i) const { return i < 7; }
+			};
+
+*deprecated* std::mem_fun_ref() - Creates a member function wrapper object,
+ 			deducing the target type from the template arguments.
+ 			The wrapper object expects a reference to an object of type T as the
+ 			first parameter to its operator().
+
+ 			    mem_fun_ref(_Ret (_Tp::*__f)() const);
+
+			Function pointer is passed using &-syntax like in a plain C.
+		4. Iterating using the pair object by vectors of Accounts and dep / with int
+			vectors.
+
 */
 #include <vector>
 #include <algorithm>
 #include <functional>
 #include "Account.class.hpp"
 
-
-int		main( void ) {
+int		main() {
 
 	typedef std::vector<Account::t>							  accounts_t;
 	typedef std::vector<int>								  ints_t;
