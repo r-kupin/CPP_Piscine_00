@@ -31,7 +31,12 @@
 			get called() and, obviously can refer only to static variables which
 			are "global" for all objects of a particular class
 		4. Object's API, all trivial, nothing interesting
-		5.
+		5. The C++ standard library does not provide a proper date type.
+			C++ inherits the structs and functions for date and time
+			manipulation from C. To access date and time related functions and
+			structures, you would need to include <ctime> header file in your
+			C++ program. So yes, It is not a big sin to use C and all that goes
+			with it here..
 */
 #include <iostream>
 #include <chrono>
@@ -85,8 +90,9 @@ int Account::getNbWithdrawals() {
 	return _totalNbWithdrawals;
 }
 
-// Display-method
+// Class Display-method
 // Shows Account static data altogether
+//
 void Account::displayAccountsInfos() {
 	_displayTimestamp();
 	std::cout << "accounts:" << _nbAccounts << ";" <<
@@ -96,6 +102,7 @@ void Account::displayAccountsInfos() {
 }
 
 // Actually object functional interface
+//
 void Account::makeDeposit(int deposit) {
 	int p_amount = _amount;
 
@@ -136,6 +143,9 @@ int Account::checkAmount() const {
 	return _amount;
 }
 
+// Object Display-method
+// Shows particular Account data altogether
+//
 void Account::displayStatus() const {
 	_displayTimestamp();
 	std::cout << "index:" << _accountIndex << ";" <<
@@ -144,6 +154,8 @@ void Account::displayStatus() const {
 			  "withdrawals:" << _nbWithdrawals << std::endl;
 }
 
+// Timestamp function
+//
 void Account::_displayTimestamp() {
 	const int kGMTYearBegin = 1900;
 
