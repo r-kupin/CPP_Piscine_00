@@ -98,6 +98,9 @@
 			Iterators, which have a maximum access level.
 			Later on, they will be used with for_each() loop
 			It is convenient to use AUTO type deduction for iterators!
+
+			The syntax of iterators is similar to C-pointers, but in fact, it is
+			just an operand overload for the Iterator object
 	3. Iterating the vector with for_each() loop which applies a function
 		to every element of a sequence.
 
