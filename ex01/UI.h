@@ -27,12 +27,11 @@ class UI {
 //		@param print - input - message to print
 //		@param get - output - line, that we got from std::cin
 //		@param err - output - error flag, set if read failed
-		static void PrintAndSetLine(const std::string &print, std::string &get,
-									bool &err);
+		static std::string PrintAndGetLine(const std::string &print, bool &err);
 //		Prints message to std::cout and reads a int from std::cin
 //		@param print - input - message to print
 //		@param get - output - int, that we got from std::cin
-		static void PrintAndSetInt(const std::string &print, int &get);
+		static int PrintAndGetInt(const std::string &print);
 //		Print message and wait for ENTER press
 //		@param print - input - message to print
 		static void PrintAndWaitForEnter(const std::string &print);

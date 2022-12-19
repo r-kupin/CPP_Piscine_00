@@ -93,7 +93,7 @@ void Book::Start() {
 	UI::ShowGreeting();
 	for (std::string usr_input;
 		 usr_input != "EXIT";
-		 UI::PrintAndSetLine(kPromptMessage, usr_input, err)) {
+		 UI::PrintAndGetLine(kPromptMessage, err)) {
 		if (err) {
 			return;
 		} else if (usr_input == "ADD") {
@@ -120,23 +120,23 @@ void Book::AddModify() {
 		oldest_modified_ = 0;
 	if (size_ < static_cast<int>(contacts_.size()))
 		size_++;
-	UI::PrintAndSetLine("Enter first name:", input, err);
+	input = UI::PrintAndGetLine("Enter first name:", err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetFirstName(input);
-	UI::PrintAndSetLine("Enter last name:", input, err);
+	input = UI::PrintAndGetLine("Enter last name:", err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetLastName(input);
-	UI::PrintAndSetLine("Enter nick name:", input, err);
+	input = UI::PrintAndGetLine("Enter nick name:", err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetNickName(input);
-	UI::PrintAndSetLine("Enter phone number:", input, err);
+	input = UI::PrintAndGetLine("Enter phone number:", err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetPhoneNumber(input);
-	UI::PrintAndSetLine("Enter darkest secret:", input, err);
+	input = UI::PrintAndGetLine("Enter darkest secret:", err);
 	if (err)
 		return;
 	contacts_.at(oldest_modified_).SetDarkestSecret(input);
@@ -158,9 +158,9 @@ void Book::Search() {
 		for (int i = 0; i < size_; ++i) {
 			contacts_.at(i).Display(i + 1);
 		}
-		UI::PrintAndSetInt(kPromptMessage, ID_to_show);
+		ID_to_show = UI::PrintAndGetInt(kPromptMessage);
 		while (ID_to_show <= 0 || ID_to_show > size_)
-			UI::PrintAndSetInt(kErrorMessage, ID_to_show);
+			ID_to_show = UI::PrintAndGetInt(kErrorMessage);
 		contacts_.at(ID_to_show - 1).ShowDetails();
 	}
 }
