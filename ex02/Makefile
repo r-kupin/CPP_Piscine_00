@@ -12,28 +12,40 @@
 #           |__/      |__/                                
 #
 
-NAME = GlobalBanksters
+NAME = ex02
+ASAN = ex02_asan
 
-SRCS = tests.cpp Account.cpp
+SRCS = src/Account.cpp  src/tests.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
 CXX = clang++
-CXXFLAGS = -Wall -Wextra -Werror
+CXXFLAGS = -Wall -Wextra -Werror -std=c++03
+ASANFLAGS = -g -fsanitize=address
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CXX) $(OBJS) -o $(NAME)
+asan: $(ASAN)
 
-%.o: %.cpp
-	$(CXX) -c $< -o $@
+test: $(NAME)
+	@./$(NAME) > test.log
+
+$(ASAN): $(OBJS)
+	$(CXX) $(ASANFLAGS) $(CXXFLAGS) $(OBJS) -o $(ASAN)
+
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+
+src/%.o: src/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm $(OBJS)
+	@rm $(OBJS)
+	@rm test.log
 
 fclean: clean
-	rm $(NAME)
+	@rm -fr $(NAME)
+	@rm -fr $(ASAN)
 
 re:
 	@$(MAKE) fclean

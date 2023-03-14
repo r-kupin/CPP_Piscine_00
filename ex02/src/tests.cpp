@@ -139,7 +139,7 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
-#include "Account.class.hpp"
+#include "Account.hpp"
 
 int		main() {
 

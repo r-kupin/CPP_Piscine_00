@@ -108,16 +108,14 @@
 #ifndef EX01_BOOK_H_
 #define EX01_BOOK_H_
 
-#include <array>
 #include <string>
 
 #include "Contact.h"
 #include "UI.h"
 
-#define BOOK_MAXSIZE 8
-
 class Book {
  public:
+	static const int kBookMaxSize = 8;
 	Book();
 	~Book();
 
@@ -126,7 +124,7 @@ class Book {
 	void 	AddModify();
 	void	Search();
 
-	std::array<Contact, BOOK_MAXSIZE> contacts_{};
+	Contact contacts_[kBookMaxSize];
 	int 	size_;
 	int		oldest_modified_;
 };

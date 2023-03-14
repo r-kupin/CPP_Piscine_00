@@ -17,12 +17,8 @@
 
 #include "Book.h"
 
-#define CELL_MAXSIZE 10
-
-class UI {
-	public:
-		UI() = delete;
-		~UI() = delete;
+struct UI {
+	static const int kCellMaxsize = 10;
 //		Prints message to std::cout and reads a line from std::cin
 //		@param print - input - message to print
 //		@param get - output - line, that we got from std::cin

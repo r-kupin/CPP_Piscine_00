@@ -39,10 +39,9 @@
 			with it here..
 */
 #include <iostream>
-#include <chrono>
 #include <ctime>
 #include <iomanip>
-#include "Account.class.hpp"
+#include "Account.hpp"
 
 // Defining and initializing static member variables
 int Account::_nbAccounts = 0;
@@ -159,7 +158,7 @@ void Account::displayStatus() const {
 void Account::_displayTimestamp() {
 	const int kGMTYearBegin = 1900;
 
-	std::time_t time = std::time(nullptr);
+	std::time_t time = std::time(NULL);
 
 	std::cout << "[" << std::gmtime(&time)->tm_year + kGMTYearBegin <<
 	std::setw(2) << std::setfill('0') << std::gmtime(&time)->tm_mon <<

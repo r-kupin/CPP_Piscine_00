@@ -81,7 +81,7 @@
 Book::Book()
 	: size_(0), oldest_modified_(0) {}
 
-Book::~Book() = default;
+Book::~Book() {};
 
 //	Main method. Shows the prompt and handles the received commands.
 //	bool err - error flag, as far as we will uncower exceptions a bit later..
@@ -111,35 +111,34 @@ void Book::Start() {
 //		enforces an explicit cast, and write static_cast<int>(size_t) is one of
 //		the C++-ish ways to say (int)size_t
 //
-//
 void Book::AddModify() {
 	std::string input;
 	bool err = false;
 
-	if (oldest_modified_ >= static_cast<int>(contacts_.size()))
+	if (oldest_modified_ >= static_cast<int>(Book::kBookMaxSize))
 		oldest_modified_ = 0;
-	if (size_ < static_cast<int>(contacts_.size()))
+	if (size_ < static_cast<int>(Book::kBookMaxSize))
 		size_++;
 	UI::PrintAndSetLine("Enter first name:", input, err);
 	if (err)
 		return;
-	contacts_.at(oldest_modified_).SetFirstName(input);
+	contacts_[oldest_modified_].SetFirstName(input);
 	UI::PrintAndSetLine("Enter last name:", input, err);
 	if (err)
 		return;
-	contacts_.at(oldest_modified_).SetLastName(input);
+	contacts_[oldest_modified_].SetLastName(input);
 	UI::PrintAndSetLine("Enter nick name:", input, err);
 	if (err)
 		return;
-	contacts_.at(oldest_modified_).SetNickName(input);
+	contacts_[oldest_modified_].SetNickName(input);
 	UI::PrintAndSetLine("Enter phone number:", input, err);
 	if (err)
 		return;
-	contacts_.at(oldest_modified_).SetPhoneNumber(input);
+	contacts_[oldest_modified_].SetPhoneNumber(input);
 	UI::PrintAndSetLine("Enter darkest secret:", input, err);
 	if (err)
 		return;
-	contacts_.at(oldest_modified_).SetDarkestSecret(input);
+	contacts_[oldest_modified_].SetDarkestSecret(input);
 	++oldest_modified_;
 }
 
@@ -156,11 +155,11 @@ void Book::Search() {
 	} else {
 		UI::ShowTableHeader();
 		for (int i = 0; i < size_; ++i) {
-			contacts_.at(i).Display(i + 1);
+			contacts_[i].Display(i + 1);
 		}
 		UI::PrintAndSetInt(kPromptMessage, ID_to_show);
 		while (ID_to_show <= 0 || ID_to_show > size_)
 			UI::PrintAndSetInt(kErrorMessage, ID_to_show);
-		contacts_.at(ID_to_show - 1).ShowDetails();
+		contacts_[ID_to_show - 1].ShowDetails();
 	}
 }

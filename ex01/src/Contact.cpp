@@ -17,9 +17,9 @@
 
 #include "UI.h"
 
-Contact::Contact() = default;
+Contact::Contact() {};
 
-Contact::~Contact() = default;
+Contact::~Contact() {};
 
 
 void Contact::SetFirstName(const std::string &first_name) {

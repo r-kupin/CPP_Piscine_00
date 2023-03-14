@@ -88,15 +88,15 @@ void UI::PrintAndWaitForEnter(const std::string &print) {
 }
 
 void UI::ShowFormattedTableCell(int data) {
-	std::cout << std::setw(CELL_MAXSIZE) << std::right << data << "|";
+	std::cout << std::setw(UI::kCellMaxsize) << std::right << data << "|";
 }
 
 void UI::ShowFormattedTableCell(const std::string &data) {
-	if (data.length() > CELL_MAXSIZE) {
+	if (data.length() > UI::kCellMaxsize) {
 		std::string kDataSubstr = data.substr(0, 9) + ".";
-		std::cout << std::setw(CELL_MAXSIZE) << std::right << kDataSubstr << "|";
+		std::cout << std::setw(UI::kCellMaxsize) << std::right << kDataSubstr << "|";
 	} else {
-		std::cout << std::setw(CELL_MAXSIZE) << std::right << data << "|";
+		std::cout << std::setw(UI::kCellMaxsize) << std::right << data << "|";
 	}
 }
 
