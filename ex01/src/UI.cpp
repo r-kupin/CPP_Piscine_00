@@ -53,7 +53,9 @@
 // Reads the line
 // if something went wrong - clears the error in the stream, prints error message
 // 	and sets the error flag
-void UI::PrintAndSetLine(const std::string &print, std::string &get, bool &err) {
+std::string UI::PrintAndGetLine(const std::string &print, bool &err) {
+	std::string get;
+
 	std::cout << print;
 	std::getline(std::cin, get);
 	if (std::cin.rdstate() != 0) {
@@ -61,22 +63,25 @@ void UI::PrintAndSetLine(const std::string &print, std::string &get, bool &err) 
 		std::cout << "Oops, something went wrong.." << std::endl;
 		err = true;
 	}
+	return (get);
 }
 // Prints the message
 // Reads 1 char
 // If it is '\n' - returns invalid number,so the prompt will be printed again
 // If not - tries to convert ascii to int digit (luckily we are bounded from 1 to 8)
 // ignore - just to remove '\n' if it's get left
-void UI::PrintAndSetInt(const std::string &print, int &get) {
+int UI::PrintAndGetInt(const std::string &print) {
+	int get;
+
 	std::cout << print;
 	get = std::cin.get();
 	if (get == '\n') {
 		get = -1;
-		return;
 	} else {
 		get -= '0';
 		std::cin.ignore(INT_MAX, '\n');
 	}
+	return (get);
 }
 // Here we do not need to ignore(), cause '\n' is what we are taking
 void UI::PrintAndWaitForEnter(const std::string &print) {
