@@ -15,8 +15,6 @@
 
 #include <string>
 
-#include "Book.h"
-
 struct UI {
 	static const int kCellMaxsize = 10;
 //		Prints message to std::cout and reads a line from std::cin

@@ -14,7 +14,7 @@
 
 NAME = megaphone
 
-SRCS = megaphone.cpp
+SRCS = src/megaphone.cpp
 
 OBJS = $(patsubst %.cpp, %.o, $(SRCS))
 

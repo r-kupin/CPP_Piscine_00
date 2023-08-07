@@ -52,7 +52,8 @@
 // Prints the message
 // Reads the line
 // if something went wrong - clears the error in the stream, prints error message
-// 	and sets the error flag
+// and sets the error flag
+// returns red string
 std::string UI::PrintAndGetLine(const std::string &print, bool &err) {
 	std::string get;
 
@@ -65,6 +66,7 @@ std::string UI::PrintAndGetLine(const std::string &print, bool &err) {
 	}
 	return (get);
 }
+
 // Prints the message
 // Reads 1 char
 // If it is '\n' - returns invalid number,so the prompt will be printed again

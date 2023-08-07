@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Book.cpp                                           :+:      :+:    :+:   */
+/*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,8 +17,7 @@
 	- Variables needed for if, while and for statements should normally be
 		 declared within those statements, so that such variables are confined
 		 to those scopes. E.g.:
-
-					while (const char* p = strchr(str, '/')) str = p + 1;
+				while (const char* p = strchr(str, '/')) str = p + 1;
 			FUNCTIONS
 	- Prefer using return values over output parameters: they improve
 		readability, and often provide the same or better performance.
@@ -63,7 +62,6 @@
 		briefly what the function does, but the focus of the comments should be
 		on how it does it.
 
-
 		Description
 	1. Variables in constructor are initialized with  the member initialization
 		list. In contrary to assignment - in the constructor's {} body - must be
@@ -76,24 +74,24 @@
 				Here the program is correct w/o member initialization list)
 	2. Destructor is set to default explicitly
  */
-#include "Book.h"
+#include "PhoneBook.h"
 
-Book::Book()
+PhoneBook::PhoneBook()
 	: size_(0), oldest_modified_(0) {}
 
-Book::~Book() {};
+PhoneBook::~PhoneBook() {};
 
 //	Main method. Shows the prompt and handles the received commands.
-//	bool err - error flag, as far as we will uncower exceptions a bit later..
+//	bool err - error flag, as far as we will uncover exceptions a bit later..
 //
-void Book::Start() {
+void PhoneBook::Start() {
 	const std::string kPromptMessage = "Enter your command:";
 	bool err = false;
 
 	UI::ShowGreeting();
 	for (std::string usr_input;
 		 usr_input != "EXIT";
-		 UI::PrintAndSetLine(kPromptMessage, usr_input, err)) {
+		 usr_input = UI::PrintAndGetLine(kPromptMessage, err)) {
 		if (err) {
 			return;
 		} else if (usr_input == "ADD") {
@@ -111,31 +109,31 @@ void Book::Start() {
 //		enforces an explicit cast, and write static_cast<int>(size_t) is one of
 //		the C++-ish ways to say (int)size_t
 //
-void Book::AddModify() {
+void PhoneBook::AddModify() {
 	std::string input;
 	bool err = false;
 
-	if (oldest_modified_ >= static_cast<int>(Book::kBookMaxSize))
+	if (oldest_modified_ >= static_cast<int>(PhoneBook::kBookMaxSize))
 		oldest_modified_ = 0;
-	if (size_ < static_cast<int>(Book::kBookMaxSize))
+	if (size_ < static_cast<int>(PhoneBook::kBookMaxSize))
 		size_++;
-	UI::PrintAndSetLine("Enter first name:", input, err);
+	input = UI::PrintAndGetLine("Enter first name:", err);
 	if (err)
 		return;
 	contacts_[oldest_modified_].SetFirstName(input);
-	UI::PrintAndSetLine("Enter last name:", input, err);
+	input = UI::PrintAndGetLine("Enter last name:", err);
 	if (err)
 		return;
 	contacts_[oldest_modified_].SetLastName(input);
-	UI::PrintAndSetLine("Enter nick name:", input, err);
+	input = UI::PrintAndGetLine("Enter nick name:", err);
 	if (err)
 		return;
 	contacts_[oldest_modified_].SetNickName(input);
-	UI::PrintAndSetLine("Enter phone number:", input, err);
+	input = UI::PrintAndGetLine("Enter phone number:", err);
 	if (err)
 		return;
 	contacts_[oldest_modified_].SetPhoneNumber(input);
-	UI::PrintAndSetLine("Enter darkest secret:", input, err);
+	input = UI::PrintAndGetLine("Enter darkest secret:", err);
 	if (err)
 		return;
 	contacts_[oldest_modified_].SetDarkestSecret(input);
@@ -145,7 +143,7 @@ void Book::AddModify() {
 //	shows all existing users in a table, then asks for an ID to show
 //		detailed user info
 //
-void Book::Search() {
+void PhoneBook::Search() {
 	const std::string kPromptMessage = "Enter contact ID to see the details:";
 	const std::string kErrorMessage = "Please enter valid ID (see the table):";
 	int ID_to_show;
@@ -157,9 +155,9 @@ void Book::Search() {
 		for (int i = 0; i < size_; ++i) {
 			contacts_[i].Display(i + 1);
 		}
-		UI::PrintAndSetInt(kPromptMessage, ID_to_show);
+		ID_to_show = UI::PrintAndGetInt(kPromptMessage);
 		while (ID_to_show <= 0 || ID_to_show > size_)
-			UI::PrintAndSetInt(kErrorMessage, ID_to_show);
+			ID_to_show = UI::PrintAndGetInt(kErrorMessage);
 		contacts_[ID_to_show - 1].ShowDetails();
 	}
 }

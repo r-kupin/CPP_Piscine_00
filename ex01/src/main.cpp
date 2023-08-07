@@ -17,24 +17,24 @@
 		type of an object. Creating object in the heap - allocating memory with
 		a *new* operator and creating a (smart)pointer to this memory area.
 			Object on the stack
-				Book book(*args*);
+				PhoneBook book(*args*);
 			Object in the heap
-				Book* book = new Book(*args*);
+				PhoneBook* book = new PhoneBook(*args*);
 					*BAD* Pointer to object,C-style
-				std::unique_ptr<Book> book(new Book(*args*));
+				std::unique_ptr<PhoneBook> book(new PhoneBook(*args*));
 					*GOOD* Declare a smart pointer on stack and pass it the raw
 						pointer (rvalue) - C++-style
 	2.Calling method of created object.
-		Just like structures in C - fields and method are accessible throw dot
+		Just like structures in C - fields and method are accessible through dot
 		notation the objects itself
 			book.start();
 		or throw the arrow notation when dealing with the pointers to objects
 			book->Start();
 */
-#include "Book.h"
+#include "PhoneBook.h"
 
 int main() {
-	Book book;
+	PhoneBook book;
 	book.Start();
 	return 0;
 }

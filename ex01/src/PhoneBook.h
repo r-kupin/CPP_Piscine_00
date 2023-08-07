@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Book.h                                             :+:      :+:    :+:   */
+/*   PhoneBook.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rokupin <rokupin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -97,12 +97,6 @@
 			public accessibility so that code outside the class definition or
 			inheritance hierarchy can create objects of the class. But you can
 			also declare a constructor as protected or private.
-		explicit -  prevents the compiler from using that constructor for
-			implicit conversions. Implicit conversions allow an object of one
-			type (called the source type) to be used where a different type
-			(called the destination type) is expected, such as when passing an
-			int argument to a function that takes a double parameter. That can
-			hide bugs.
 */
 
 #ifndef EX01_BOOK_H_
@@ -113,11 +107,11 @@
 #include "Contact.h"
 #include "UI.h"
 
-class Book {
+class PhoneBook {
  public:
 	static const int kBookMaxSize = 8;
-	Book();
-	~Book();
+	PhoneBook();
+	~PhoneBook();
 
 	void 	Start();
  private:

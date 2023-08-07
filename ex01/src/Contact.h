@@ -16,13 +16,7 @@
 #include <string>
 
 class Contact {
-  private:
-	std::string  first_name_,
-            last_name_,
-            nick_name_,
-            phone_number_,
-            darkest_secret_;
-  public:
+public:
 	Contact();
 	~Contact();
 	void SetFirstName(const std::string &first_name);
@@ -32,6 +26,12 @@ class Contact {
 	void SetDarkestSecret(const std::string &darkest_secret);
 	void Display(int index);
 	void ShowDetails();
+private:
+	std::string  first_name_,
+            last_name_,
+            nick_name_,
+            phone_number_,
+            darkest_secret_;
 };
 
 #endif // EX01_CONTACT_H
