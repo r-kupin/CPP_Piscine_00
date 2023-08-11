@@ -33,20 +33,21 @@
 
 #include <iostream>
 
+typedef std::string::iterator StrIt;
+
 int main(int argc, char **argv)
 {
   if (argc < 2) {
     std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
   }  else {
-    for (int i = 1; i != argc; i++) {
-      for (char *ptr = argv[i]; *ptr ; ptr++) {
-        if (*ptr >= 'a' && *ptr <= 'z') {
-          *ptr -= 'a' - 'A';
-        }
-        std::cout << *ptr;
+      for (int i = 1; i != argc; i++) {
+          std::string s(argv[i]);
+          for (size_t j = 0; j < s.size(); ++j) {
+              s[j] = std::toupper(s[j]);
+          }
+          std::cout << s;
       }
-    }
-    std::cout << std::endl;
+      std::cout << std::endl;
   }
   return 0;
 };

@@ -12,7 +12,7 @@
 /*
 		Description
 
-	So, basically here we have $$ blocs of methods, broken down by types:
+	So, basically here we have 5 blocs of methods, broken down by types:
  		1. Defining and initializing static member variables
 			When we declare a static member variable inside a class, we’re
 			telling the compiler about the existence of a static member variable,

@@ -15,12 +15,12 @@
 NAME = ex01
 ASAN = ex01_asan
 
-SRCS = src/Book.cpp  src/Contact.cpp  src/main.cpp  src/UI.cpp
+SRCS = src/PhoneBook.cpp  src/Contact.cpp  src/main.cpp  src/UI.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
 CXX = clang++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++03
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 ASANFLAGS = -g -fsanitize=address
 
 all: $(NAME)
@@ -37,7 +37,7 @@ src/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	@rm $(OBJS)
+	@rm -fr $(OBJS)
 
 fclean: clean
 	@rm -fr $(NAME)
